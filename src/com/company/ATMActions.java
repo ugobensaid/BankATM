@@ -1,10 +1,17 @@
 package com.company;
 
+import java.io.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class ATMActions {
     private static int attempt = 0;
     private static Client bankClient;
+    private static BufferedWriter writer;
+    private static File statementFile;
 
     private static boolean isNumber(String str) {
         boolean isNumber = true;
@@ -18,15 +25,22 @@ public class ATMActions {
     }
 
     private static void displayOptions() {
-        System.out.println("\n1. Witdraw");
+        System.out.println("\n1. Withdraw");
         System.out.println("2. Deposit");
-        System.out.println("3. Account statement\n");
+        System.out.println("3. Account statement");
+        System.out.println("4. Quit\n");
+    }
+
+    private static String getCurrentDateTime() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
     }
 
     private static void ATMMenu(Scanner scanner) {
         int amount;
 
-        System.out.print("\nPlease, choose one of the choice proposed below or type \"quit\" to finish :");
+        System.out.print("\nPlease, choose one of the choice proposed below :");
         displayOptions();
         String operationChoice = scanner.nextLine();
 
@@ -35,8 +49,9 @@ public class ATMActions {
                 System.out.print("How much do you want to withdraw (in euro) ? : ");
                 try {
                     amount = Integer.valueOf(scanner.nextLine());
-                    bankClient.getBankAccount().withdraw(amount);
-                } catch(NumberFormatException e) {
+                    if (bankClient.getBankAccount().withdraw(amount))
+                        writer.write(getCurrentDateTime() + ": Withdraw of " + amount + "€\n\n"); //Peut etre faire une fonction qui ecrit dans le fichier et la mettre aussi en bas
+                } catch(NumberFormatException | IOException e) {
                     System.out.println("Please, enter a valid amount");
                 }
                 break;
@@ -44,26 +59,33 @@ public class ATMActions {
                 System.out.println("How much do you want to deposit (in euro) ? : ");
                 try {
                     amount = Integer.valueOf(scanner.nextLine());
-                    bankClient.getBankAccount().deposit(amount);
-                } catch(NumberFormatException e) {
+                    if (bankClient.getBankAccount().deposit(amount))
+                        writer.write(getCurrentDateTime() + ": Deposit of " + amount + "€\n\n");
+                } catch(NumberFormatException | IOException e) {
                     System.out.println("Please, enter a valid amount");
                 }
                 break;
             case "3":
-                System.out.println("Please wait, we are printing your account statement...");
-                bankClient.getBankAccount().getAccountStatement();
+                System.out.println("Please wait, we are printing your account statement...\n");
+                //bankClient.getBankAccount().getAccountStatement();
+                getAccountStatement();
+                System.out.println("Current account balance : " + bankClient.getBankAccount().getAvailableAmount() + "€");
                 break;
+            case "4":
+                System.out.println("Goodbye " + bankClient.getName());
+                System.out.println("Don't forget to get your credit card");
+                try {
+                    writer.close();
+                    statementFile.delete();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return;
             default:
-                if (!operationChoice.equals("quit"))
-                    System.out.println("Please, select one of the option displayed on the screen");
+                System.out.println("Please, select one of the option displayed on the screen");
                 break;
         }
 
-        if (operationChoice.equals("quit")) {
-            System.out.println("Goodbye " + bankClient.getName());
-            System.out.println("Don't forget to get your credit card");
-            return;
-        }
         ATMMenu(scanner);
     }
 
@@ -94,7 +116,40 @@ public class ATMActions {
 
         BankAccount bankAccount = new BankAccount(0);
         bankClient = new Client(name, pinCode, bankAccount);
+        createStatementFile();
 
         pinCodeVerification(scanner);
+    }
+
+    private static void createStatementFile() {
+        Path path = FileSystems.getDefault().getPath("./resources").toAbsolutePath();
+
+        try {
+            statementFile = new File(path + "/" + "BankStatement.txt");
+            if (statementFile.createNewFile()) {
+                writer = new BufferedWriter(new FileWriter(statementFile));
+                writer.write(bankClient.getName() + "'s Account Statement\n\n");
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void getAccountStatement() {
+        try {
+            writer.flush();
+            FileReader fr = new FileReader(statementFile);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+            fr.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
