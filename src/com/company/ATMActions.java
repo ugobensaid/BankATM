@@ -13,6 +13,12 @@ public class ATMActions {
     private static BufferedWriter writer;
     private static File statementFile;
 
+    /**
+     * Function to know if the string contains a valid number
+     *
+     * @param str : String that must contain a number
+     * @return boolean
+     */
     private static boolean isNumber(String str) {
         boolean isNumber = true;
 
@@ -24,6 +30,9 @@ public class ATMActions {
         return isNumber;
     }
 
+    /**
+     * Function to display ATM options to the screen
+     */
     private static void displayOptions() {
         System.out.println("\n1. Withdraw");
         System.out.println("2. Deposit");
@@ -31,12 +40,19 @@ public class ATMActions {
         System.out.println("4. Quit\n");
     }
 
+    /**
+     * @return current date as String format
+     */
     private static String getCurrentDateTime() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now);
     }
 
+    /**
+     * Function that does an action according to what the user has entered
+     * @param scanner
+     */
     private static void ATMMenu(Scanner scanner) {
         int amount;
 
@@ -67,7 +83,6 @@ public class ATMActions {
                 break;
             case "3":
                 System.out.println("Please wait, we are printing your account statement...\n");
-                //bankClient.getBankAccount().getAccountStatement();
                 getAccountStatement();
                 System.out.println("Current account balance : " + bankClient.getBankAccount().getAvailableAmount() + "€");
                 break;
@@ -89,6 +104,10 @@ public class ATMActions {
         ATMMenu(scanner);
     }
 
+    /**
+     * Function that check if the good pin code is entered
+     * @param scanner
+     */
     private static void pinCodeVerification(Scanner scanner) {
         System.out.print("Hello " + bankClient.getName() + ", please enter your pin code : ");
         String pinVerification = scanner.nextLine();
@@ -106,6 +125,11 @@ public class ATMActions {
         }
     }
 
+    /**
+     * Function that creates a Client with a name, a pin code and a BankAccount
+     * @param name Name of the customer
+     * @param scanner
+     */
     static void pinCodeCreation(String name, Scanner scanner) {
         System.out.print("PLease choose a pin code for your credit card : ");
         String pinCode = scanner.nextLine();
@@ -121,6 +145,9 @@ public class ATMActions {
         pinCodeVerification(scanner);
     }
 
+    /**
+     * Function that creates a file where all the operations will be stored
+     */
     private static void createStatementFile() {
         Path path = FileSystems.getDefault().getPath("./resources").toAbsolutePath();
 
@@ -135,6 +162,9 @@ public class ATMActions {
         }
     }
 
+    /**
+     * Function that print the Account statement on the screen
+     */
     private static void getAccountStatement() {
         try {
             writer.flush();
