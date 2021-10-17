@@ -12,7 +12,7 @@ namespace BankATM
         {
             int number;
 
-            return int.TryParse(str, out number); //problème args
+            return int.TryParse(str, out number);
         }
 
         private static void displayOptions()
@@ -74,15 +74,6 @@ namespace BankATM
                 case "4":
                     Console.WriteLine("Goodbye " + bankClient.getName());
                     Console.WriteLine("Don't forget to get your credit card");
-                    /*try
-                    {
-                        writer.close();
-                        statementFile.delete();
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }*/
                     return;
                 default:
                     Console.WriteLine("Please, select one of the option displayed on the screen");
