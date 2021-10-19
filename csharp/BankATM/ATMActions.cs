@@ -23,9 +23,9 @@ namespace BankATM
             Console.WriteLine("4. Quit\n");
         }
 
-        private static string getCurrentDateTime()
+        private static string getCurrentDate()
         {
-            return DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            return DateTime.Now.ToString("dd/MM/yyyy");
         }
 
         private static void ATMMenu()
@@ -43,9 +43,11 @@ namespace BankATM
                     try
                     {
                         amount = Int32.Parse(Console.ReadLine());
+                        int amountLength = amount.ToString().Length;
 
-                        if (bankClient.getBankAccount().withdraw(amount))                        
-                            addOperationToSTatement(getCurrentDateTime() + ": Withdraw of " + amount + "€\n\n");                        
+                        if (bankClient.getBankAccount().withdraw(amount))
+                            addOperationToSTatement("\n WITHDRAW   | " + getCurrentDate() + " | " + amount +
+                                printSpaces(amount) + " | " + bankClient.getBankAccount().getAvailableAmount());
                     }
                     catch (FormatException e)
                     {
@@ -59,7 +61,8 @@ namespace BankATM
                         amount = Int32.Parse(Console.ReadLine());
 
                         if (bankClient.getBankAccount().deposit(amount))
-                            addOperationToSTatement(getCurrentDateTime() + ": Deposit of " + amount + "€\n\n");
+                            addOperationToSTatement("\n DEPOSIT    | " + getCurrentDate() + " | " + amount +
+                                printSpaces(amount) + " | " + bankClient.getBankAccount().getAvailableAmount());
                     }
                     catch (FormatException e)
                     {
@@ -69,7 +72,6 @@ namespace BankATM
                 case "3":
                     Console.WriteLine("Please wait, we are printing your account statement...\n");
                     Console.WriteLine(getAccountStatement());
-                    Console.WriteLine("Current account balance : " + bankClient.getBankAccount().getAvailableAmount() + "€");
                     break;
                 case "4":
                     Console.WriteLine("Goodbye " + bankClient.getName());
@@ -116,7 +118,8 @@ namespace BankATM
             BankAccount bankAccount = new BankAccount(0);
             bankClient = new Client(name, pinCode, bankAccount);
 
-            accountStatement += bankClient.getName() + "'s Account Statement\n\n";
+            accountStatement += " Operation  | Date       | Amount     | Balance    \n" +
+                " -----------------------------------------------";
 
             pinCodeVerification();
         }
@@ -129,6 +132,19 @@ namespace BankATM
         private static string getAccountStatement()
         {
             return accountStatement;
+        }
+
+        private static string printSpaces(int amount)
+        {
+            int amountLength = amount.ToString().Length;
+            string spaces = "";
+
+            for (int i = 0; i <= 9 - amountLength; i++)
+            {
+                spaces += " ";
+            }
+
+            return spaces;
         }
     }
 }
