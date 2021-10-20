@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankATM", "BankATM.csproj", "{766BD506-FECD-4316-8535-4643F0642197}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankATM", "BankATM.csproj", "{9B7E3892-0434-43F4-BABF-02C2CE49A4F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankATMTests", "..\BankATMTests\BankATMTests.csproj", "{B7F21878-2EE3-4887-A99C-9C27846CB00C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +13,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{766BD506-FECD-4316-8535-4643F0642197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{766BD506-FECD-4316-8535-4643F0642197}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{766BD506-FECD-4316-8535-4643F0642197}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{766BD506-FECD-4316-8535-4643F0642197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B7E3892-0434-43F4-BABF-02C2CE49A4F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B7E3892-0434-43F4-BABF-02C2CE49A4F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B7E3892-0434-43F4-BABF-02C2CE49A4F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B7E3892-0434-43F4-BABF-02C2CE49A4F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7F21878-2EE3-4887-A99C-9C27846CB00C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7F21878-2EE3-4887-A99C-9C27846CB00C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7F21878-2EE3-4887-A99C-9C27846CB00C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7F21878-2EE3-4887-A99C-9C27846CB00C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {EF4E013F-7208-4028-A466-76B2151D0E26}
+		SolutionGuid = {54F941DC-CB36-483C-99ED-A343856CF1A1}
 	EndGlobalSection
 EndGlobal

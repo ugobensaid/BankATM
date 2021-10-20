@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ugobe\\VisualStudio\\BankATM\\BankATM.csproj",
+      "projectUniqueName": "C:\\Users\\ugobe\\BankATM\\csharp\\BankATM\\BankATM.csproj",
       "projectName": "BankATM",
-      "projectPath": "C:\\Users\\ugobe\\VisualStudio\\BankATM\\BankATM.csproj",
+      "projectPath": "C:\\Users\\ugobe\\BankATM\\csharp\\BankATM\\BankATM.csproj",
       "packagesPath": "C:\\Users\\ugobe\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ugobe\\VisualStudio\\BankATM\\obj\\",
+      "outputPath": "C:\\Users\\ugobe\\BankATM\\csharp\\BankATM\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
